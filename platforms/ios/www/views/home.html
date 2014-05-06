@@ -1,0 +1,21 @@
+<h2>home</h2>
+<!-- phonegap temp init test -->
+<div class="app">
+	<h1>PhoneGap. some change</h1>
+	<div id="deviceready" class="blink">
+		<p class="event listening">Connecting to Device</p>
+		<p class="event received">Device is Ready</p>
+	</div>
+</div>
+<!--/ phonegap temp init test -->
+<ul class="table-view">
+  <li ng-repeat="item in logData" class="table-view-cell media">
+    <a href="#/logdetail/{{item.id}}" class="navigate-right">
+      <img class="media-object pull-left" src="http://placehold.it/42x42">
+      <div class="media-body">
+        {{item.title}}
+        <p>{{item.description}}</p>
+      </div>
+    </a>
+  </li>
+</ul>
