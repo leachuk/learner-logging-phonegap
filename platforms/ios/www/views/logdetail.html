@@ -1,34 +1,36 @@
-<h2>{{logItemData.title}}</h2>
+<div class="content">
+    <h2>{{logItemData.title}}</h2>
 
-<form class="input-group">
-  <div class="input-row">
-    <label>Distance</label>
-    <input type="text" placeholder="51 km">
-  </div>
-  <div class="input-row">
-    <label>Date</label>
-    <input type="text" placeholder="27/07/2014">
-  </div>
-  <div class="input-row">
-    <label>Time</label>
-    <input type="text" placeholder="35 minutes">
-  </div>
-  <div class="input-row">
-    <label>Started</label>
-    <input type="text" placeholder="16:05">
-  </div>
-  <div class="input-row">
-    <label>Ended</label>
-    <input type="text" placeholder="16:40">
-  </div>
-</form>
+    <form class="input-group">
+      <div class="input-row">
+        <label>Distance</label>
+        <input type="text" placeholder="51 km">
+      </div>
+      <div class="input-row">
+        <label>Date</label>
+        <input type="text" placeholder="27/07/2014">
+      </div>
+      <div class="input-row">
+        <label>Time</label>
+        <input type="text" placeholder="35 minutes">
+      </div>
+      <div class="input-row">
+        <label>Started</label>
+        <input type="text" placeholder="16:05">
+      </div>
+      <div class="input-row">
+        <label>Ended</label>
+        <input type="text" placeholder="16:40">
+      </div>
+    </form>
 
-<section id="map">
-	<div id="map_canvas" ui-map="myMap" 
-	style="height:200px;width:295px;border:2px solid #777777;margin:3px; border:1px solid" 
-	ui-options="mapOptions" 
-	ui-event="{'map-tilesloaded' : 'onMapIdle()'}">
-	</div>
-	<div ui-map-marker="myMarkers"></div>
-	<div ui-map-polyline="logPath"></div>
-</section>
+    <section id="map">
+        <div id="map_canvas" ui-map="myMap" 
+        style="height:200px;width:295px;border:2px solid #777777;margin:3px; border:1px solid" 
+        ui-options="mapOptions" 
+        ui-event="{'map-tilesloaded' : 'onMapIdle()'}">
+        </div>
+        <div ui-map-marker="myMarkers"></div>
+        <div ui-map-polyline="logPath"></div>
+    </section>
+</div>

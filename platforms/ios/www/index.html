@@ -20,14 +20,11 @@
     <!-- build:css({.tmp,app}) styles/main.css -->
     
     <!-- may not be necessary, but will still need a place to add overrides/custom css -->
-    <!--<link rel="stylesheet" href="styles/main.css"> -->
     <link rel="stylesheet" href="css/ratchet.min.css">
     <link rel="stylesheet" href="css/ratchet-theme-ios.min.css">
     <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/index.css">
     <!-- endbuild -->
-    <style>
-    .map-canvas { height: 200px; }
-    </style>
   </head>
   <!--<body ng-app="learnerLoggingUi2App">--> <!--removed as we are initialising via angular.bootstrap-->
   <body>
@@ -47,11 +44,12 @@
     </div>
     
     <!-- Add your site or application content here -->
-    <div class="content">
-		<div class="view-animate-container" ng-class="direction" >
-			<div ng-view class="view-animate"></div>
-		</div>
-	</div>
+    <div class="view-animate-container" ng-class="direction" >
+        <!--<div class="content">-->
+            <div ng-view class="view-animate"></div>
+        <!--</div>-->
+    </div>
+
 	
 	<!-- Compose modal -->
     <div id="composeModal" class="modal">
@@ -65,14 +63,14 @@
         <h1 class="title">New message</h1>
       </header>
       
-      <div class="content">
+      <!--<div class="content">-->
         <form class="input-group">
           <input type="text" placeholder="To:">
           <input type="email" placeholder="From:">
           <input type="text" placeholder="Subject:">
           <textarea rows="20"></textarea>
         </form>
-      </div>
+      <!--</div>-->
     </div><!-- /.modal -->
     
     <!-- footer -->
