@@ -2,5 +2,6 @@
 
 angular.module('getAllLogDataJsonService', ['ngResource'])
 .factory('GetAllLogDataJsonService', function($resource) {
-  return $resource('../../../data/tempdata.json');
+  console.log("In GetAllLogDataJsonService");
+  return $resource('js/tempdata.json');
 });
