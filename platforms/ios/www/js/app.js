@@ -20,9 +20,6 @@ learnerLoggingUi2App.run(function($rootScope, $window) {
   //$rootScope.direction = 'ltr'; //don't want initial animation
   // listen change start events
   $rootScope.$on('$routeChangeStart', function(event, next, current) {
-    //set timestamp start on route change (button press)
-    $rootScope.timestart = Date.now();
-                 
     //$rootScope.direction = 'rtl';
     //set animation direction for initial event, otherwise no animation
     if (current && next) {

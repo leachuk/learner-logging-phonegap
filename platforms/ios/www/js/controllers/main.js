@@ -3,11 +3,8 @@
 var learnerLogCtrl = angular.module('learnerLogCtrl', []);
 
 //controller for creating a new log
-learnerLogCtrl.controller('newLogCtrl', ['$scope', '$http', '$routeParams',function($scope, $http, $routeParams){
-    //set end timestamp
-    $rootScope.timeend= Date.now();
-    console.log("timestamp: " + ($rootScope.timeend - $rootScope.timestart));
-    
+learnerLogCtrl.controller('newLogCtrl', ['$scope', '$rootScope', '$http', '$routeParams',function($scope, $rootScope, $http, $routeParams){
+
 	$scope.testvars = ['var1','var2'];
 	$scope.gpsStatus = ['initialising','ready'];
 	var runOnceSet = false;
@@ -41,9 +38,6 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$http', '$routeParams',funct
 }]);
 
 learnerLogCtrl.controller('homeCtrl', ['$scope', '$rootScope', '$http', '$routeParams', 'GetAllLogDataJsonService', function($scope, $rootScope, $http, $routeParams, GetAllLogDataJsonService){
-    //set end timestamp
-    $rootScope.timeend= Date.now();
-    console.log("timestamp: " + ($rootScope.timeend - $rootScope.timestart));
                                        
 	$scope.testvarshome = ['var3','var4'];
 	console.log("controller: homeCtrl");
@@ -54,12 +48,6 @@ learnerLogCtrl.controller('homeCtrl', ['$scope', '$rootScope', '$http', '$routeP
 }]);
 
 learnerLogCtrl.controller('logDetailCtrl', ['$scope', '$rootScope', '$routeParams', '$filter',function($scope, $rootScope, $routeParams, $filter){
-    //set end timestamp
-    $rootScope.timeend= Date.now();
-    console.log("time start" + $rootScope.timestart);
-    console.log("time end" + $rootScope.timeend);
-    console.log("timestamp: " + ($rootScope.timeend - $rootScope.timestart));
-    
 	console.log("controller: logDetailCtrl");
 	var runOnceSet = false;
 	var itemData = $filter('filter')($rootScope.logData, {id: $routeParams.logid});
@@ -84,7 +72,7 @@ learnerLogCtrl.controller('logDetailCtrl', ['$scope', '$rootScope', '$routeParam
                 map: $scope.myMap,
                 position: new google.maps.LatLng(-33.8738362136655, 151.18457794189453)
             });    
-       		//try delay of line display (or create) to prevent slowdown on swipe animation
+       		
         	new google.maps.Polyline({
 				map: $scope.myMap,
 				path: mapPolyLine,
