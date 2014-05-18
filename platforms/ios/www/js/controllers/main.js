@@ -4,6 +4,10 @@ var learnerLogCtrl = angular.module('learnerLogCtrl', []);
 
 //controller for creating a new log
 learnerLogCtrl.controller('newLogCtrl', ['$scope', '$http', '$routeParams',function($scope, $http, $routeParams){
+    //set end timestamp
+    $rootScope.timeend= Date.now();
+    console.log("timestamp: " + ($rootScope.timeend - $rootScope.timestart));
+    
 	$scope.testvars = ['var1','var2'];
 	$scope.gpsStatus = ['initialising','ready'];
 	var runOnceSet = false;
@@ -37,6 +41,10 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$http', '$routeParams',funct
 }]);
 
 learnerLogCtrl.controller('homeCtrl', ['$scope', '$rootScope', '$http', '$routeParams', 'GetAllLogDataJsonService', function($scope, $rootScope, $http, $routeParams, GetAllLogDataJsonService){
+    //set end timestamp
+    $rootScope.timeend= Date.now();
+    console.log("timestamp: " + ($rootScope.timeend - $rootScope.timestart));
+                                       
 	$scope.testvarshome = ['var3','var4'];
 	console.log("controller: homeCtrl");
 	GetAllLogDataJsonService.query(function(data){
@@ -46,6 +54,12 @@ learnerLogCtrl.controller('homeCtrl', ['$scope', '$rootScope', '$http', '$routeP
 }]);
 
 learnerLogCtrl.controller('logDetailCtrl', ['$scope', '$rootScope', '$routeParams', '$filter',function($scope, $rootScope, $routeParams, $filter){
+    //set end timestamp
+    $rootScope.timeend= Date.now();
+    console.log("time start" + $rootScope.timestart);
+    console.log("time end" + $rootScope.timeend);
+    console.log("timestamp: " + ($rootScope.timeend - $rootScope.timestart));
+    
 	console.log("controller: logDetailCtrl");
 	var runOnceSet = false;
 	var itemData = $filter('filter')($rootScope.logData, {id: $routeParams.logid});
