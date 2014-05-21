@@ -2,21 +2,45 @@
 
 var learnerLogCtrl = angular.module('learnerLogCtrl', []);
 
+var onSuccess = function(position) {
+    console.log('Latitude: '          + position.coords.latitude          + '\n' +
+          'Longitude: '         + position.coords.longitude         + '\n' +
+          'Altitude: '          + position.coords.altitude          + '\n' +
+          'Accuracy: '          + position.coords.accuracy          + '\n' +
+          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+          'Heading: '           + position.coords.heading           + '\n' +
+          'Speed: '             + position.coords.speed             + '\n' +
+          'Timestamp: '         + position.timestamp                + '\n');
+};
+
+// onError Callback receives a PositionError object
+//
+function onError(error) {
+    alert('code: '    + error.code    + '\n' +
+          'message: ' + error.message + '\n');
+}
+
+
+
 //controller for creating a new log
 learnerLogCtrl.controller('newLogCtrl', ['$scope', '$rootScope', '$http', '$routeParams',function($scope, $rootScope, $http, $routeParams){
 
 	$scope.testvars = ['var1','var2'];
 	$scope.gpsStatus = ['initialising','ready'];
 	var runOnceSet = false;
+    var watchID = null;
 	console.log("controller: newLogCtrl");
 	
 	$scope.startGpsRecord = function(){
 		console.log("startGpsRecord clicked");
+        //navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        watchID = navigator.geolocation.watchPosition(onSuccess, onError, { enableHighAccuracy: true, timeout: 5000 });
 	}
 	
 	$scope.stopGpsRecord = function(){
 		console.log("stopGpsRecord clicked");
-	}
+        navigator.geolocation.clearWatch(watchID);
+    }
 	
 	$scope.mapOptions = {
       center: new google.maps.LatLng(-33.8738362136655, 151.18457794189453),
