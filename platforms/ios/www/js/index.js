@@ -16,7 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
+ 
+function showAlert(message, title) {
+  if (navigator.notification) {
+    navigator.notification.alert(message, null, title, 'OK');
+  } else {
+    alert(title ? (title + ": " + message) : message);
+  }
+}
+
+var PhoneGap = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -33,17 +42,21 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        app.receivedEvent('deviceready');
+        PhoneGap.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
+        /*
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+        var receivedElement = parentElement.querySelector('.receivedElement');
 
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
-
+        */
+        //showAlert('PhoneGap Initialized', 'Message');
         console.log('Received Event: ' + id);
     }
 };
+
+PhoneGap.initialize();
