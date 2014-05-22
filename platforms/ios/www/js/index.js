@@ -25,7 +25,7 @@ function showAlert(message, title) {
   }
 }
 
-var PhoneGap = {
+var DriverLoggingApp = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -42,7 +42,8 @@ var PhoneGap = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        PhoneGap.receivedEvent('deviceready');
+        DriverLoggingApp.receivedEvent('deviceready');
+        DriverLoggingStorage.initialise();
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -59,4 +60,4 @@ var PhoneGap = {
     }
 };
 
-PhoneGap.initialize();
+DriverLoggingApp.initialize();
