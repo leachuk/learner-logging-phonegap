@@ -1,7 +1,7 @@
 'use strict';
 
 var learnerLogCtrl = angular.module('learnerLogCtrl', []);
-
+var coordsArray = new Array();
 var onSuccess = function(position) {
     console.log('Latitude: '          + position.coords.latitude          + '\n' +
           'Longitude: '         + position.coords.longitude         + '\n' +
@@ -11,6 +11,9 @@ var onSuccess = function(position) {
           'Heading: '           + position.coords.heading           + '\n' +
           'Speed: '             + position.coords.speed             + '\n' +
           'Timestamp: '         + position.timestamp                + '\n');
+    
+    var latlong = {"lat": position.coords.latitude, "lon": position.coords.longitude  };
+    coordsArray.push(latlong);
 };
 
 // onError Callback receives a PositionError object
@@ -27,6 +30,7 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$rootScope', '$http', '$rout
 
 	$scope.testvars = ['var1','var2'];
 	$scope.gpsStatus = ['initialising','ready'];
+    $scope.track = {date: new Date(), title: ''};
 	var runOnceSet = false;
     var watchID = null;
 	console.log("controller: newLogCtrl");
@@ -34,12 +38,16 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$rootScope', '$http', '$rout
 	$scope.startGpsRecord = function(){
 		console.log("startGpsRecord clicked");
         //navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        $rootScope.dataStore.setKeyVal($scope.trackTitle, $scope.trackTitle);
+        $rootScope.dataStore.setKeyVal("date-"+$scope.trackTitle, $scope.trackDate);
         watchID = navigator.geolocation.watchPosition(onSuccess, onError, { enableHighAccuracy: true, timeout: 5000 });
 	}
 	
 	$scope.stopGpsRecord = function(){
 		console.log("stopGpsRecord clicked");
         navigator.geolocation.clearWatch(watchID);
+        
+        $rootScope.dataStore.setKeyVal("data-" + $scope.trackTitle, JSON.stringify(coordsArray));
     }
 	
 	$scope.mapOptions = {

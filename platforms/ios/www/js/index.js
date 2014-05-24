@@ -43,7 +43,7 @@ var DriverLoggingApp = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         DriverLoggingApp.receivedEvent('deviceready');
-        DriverLoggingStorage.initialise();
+        //DriverLoggingStorage.initialise();
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {

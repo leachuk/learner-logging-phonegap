@@ -1,8 +1,8 @@
 <div class="content">
     <h2>new log</h2>
     <form>
-      <input type="text" placeholder="Title">
-      <input type="date" placeholder="Date">
+      <input name="trackTitle" ng-model="track.title" type="text" placeholder="Title" ng-value="">
+      <input name="trackDate" ng-model="track.date" type="date" placeholder="Date">
     </form>
     <p>GPS Status [{{gpsStatus[0]}}]</p>
     <section id="map">

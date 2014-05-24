@@ -15,26 +15,28 @@ var learnerLoggingUi2App = angular.module('learnerLoggingUi2App', [
 learnerLoggingUi2App.run(function($rootScope, $window) {
     FastClick.attach(document.body);
     console.log("attaching fastclick");
-    
-  // publish current transition direction on rootScope
-  //$rootScope.direction = 'ltr'; //don't want initial animation
-  // listen change start events
-  $rootScope.$on('$routeChangeStart', function(event, next, current) {
-    //$rootScope.direction = 'rtl';
-    //set animation direction for initial event, otherwise no animation
-    if (current && next) {
-      $rootScope.direction = 'rtl';  
-    }
-    //console.log(next);
-    if (current && next && (current.depth > next.depth)) {
-      $rootScope.direction = 'ltr';  
-    }
-    // back
-    $rootScope.back = function() {
-		console.log("back");
-		$window.history.back();
-    }
-  });
+    //intialise localstorage globally
+    $rootScope.dataStore = DriverLoggingStorage;
+    $rootScope.dataStore.initialise();
+    // publish current transition direction on rootScope
+    //$rootScope.direction = 'ltr'; //don't want initial animation
+    // listen change start events
+    $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        //$rootScope.direction = 'rtl';
+        //set animation direction for initial event, otherwise no animation
+        if (current && next) {
+          $rootScope.direction = 'rtl';  
+        }
+        //console.log(next);
+        if (current && next && (current.depth > next.depth)) {
+          $rootScope.direction = 'ltr';  
+        }
+        // back
+        $rootScope.back = function() {
+            console.log("back");
+            $window.history.back();
+        }
+    });
 });
   
 learnerLoggingUi2App.config(function ($routeProvider) {
