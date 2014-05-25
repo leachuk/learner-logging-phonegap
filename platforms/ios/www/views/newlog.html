@@ -1,10 +1,11 @@
 <div class="content">
     <h2>new log</h2>
-    <form>
+    <form name="track">
       <input name="trackTitle" ng-model="track.title" type="text" placeholder="Title" ng-value="">
       <input name="trackDate" ng-model="track.date" type="date" placeholder="Date">
     </form>
     <p>GPS Status [{{gpsStatus[0]}}]</p>
+    <p>TitleIs : {{track.title}}</p>
     <section id="map">
         <div id="map_canvas" ui-map="myMap" 
         style="height:200px;width:295px;border:2px solid #777777;margin:3px; border:1px solid" 

@@ -38,8 +38,10 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$rootScope', '$http', '$rout
 	$scope.startGpsRecord = function(){
 		console.log("startGpsRecord clicked");
         //navigator.geolocation.getCurrentPosition(onSuccess, onError);
-        $rootScope.dataStore.setKeyVal($scope.trackTitle, $scope.trackTitle);
-        $rootScope.dataStore.setKeyVal("date-"+$scope.trackTitle, $scope.trackDate);
+        console.log("track scope:");
+        console.log($scope.track);
+        $rootScope.dataStore.setKeyVal($scope.track.title, $scope.track.title);
+        $rootScope.dataStore.setKeyVal("date-"+$scope.track.title, $scope.track.date);
         watchID = navigator.geolocation.watchPosition(onSuccess, onError, { enableHighAccuracy: true, timeout: 5000 });
 	}
 	
@@ -47,7 +49,7 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$rootScope', '$http', '$rout
 		console.log("stopGpsRecord clicked");
         navigator.geolocation.clearWatch(watchID);
         
-        $rootScope.dataStore.setKeyVal("data-" + $scope.trackTitle, JSON.stringify(coordsArray));
+        $rootScope.dataStore.setKeyVal("data-" + $scope.track.title, JSON.stringify(coordsArray));
     }
 	
 	$scope.mapOptions = {
