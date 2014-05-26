@@ -1,5 +1,5 @@
 'use strict';
-
+var dataArray = {};
 var learnerLogCtrl = angular.module('learnerLogCtrl', []);
 var coordsArray = new Array();
 var onSuccess = function(position) {
@@ -40,16 +40,22 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$rootScope', '$http', '$rout
         //navigator.geolocation.getCurrentPosition(onSuccess, onError);
         console.log("track scope:");
         console.log($scope.track);
-        $rootScope.dataStore.setKeyVal($scope.track.title, $scope.track.title);
-        $rootScope.dataStore.setKeyVal("date-"+$scope.track.title, $scope.track.date);
+       
+        //var date = 'date:' + $scope.track.date;
+        dataArray.id = $scope.track.title;
+        
+        //dataArray.push(date);
+        //$rootScope.dataStore.setKeyVal($scope.track.title, $scope.track.title);
+        //$rootScope.dataStore.setKeyVal("date-"+$scope.track.title, $scope.track.date);
         watchID = navigator.geolocation.watchPosition(onSuccess, onError, { enableHighAccuracy: true, timeout: 5000 });
 	}
 	
 	$scope.stopGpsRecord = function(){
 		console.log("stopGpsRecord clicked");
         navigator.geolocation.clearWatch(watchID);
-        
-        $rootScope.dataStore.setKeyVal("data-" + $scope.track.title, JSON.stringify(coordsArray));
+        dataArray.coords = coordsArray;
+        //dataArray.push('coords:' + coordsArray);
+        $rootScope.dataStore.setKeyVal("data-" + $scope.track.title, JSON.stringify(dataArray));
     }
 	
 	$scope.mapOptions = {
