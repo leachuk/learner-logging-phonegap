@@ -26,14 +26,14 @@ function onError(error) {
 
 
 //controller for creating a new log
-learnerLogCtrl.controller('newLogCtrl', ['$scope', '$rootScope', '$http', '$routeParams',function($scope, $rootScope, $http, $routeParams){
-
-	$scope.testvars = ['var1','var2'];
+learnerLogCtrl.controller('newLogCtrl', ['$scope', '$filter', '$rootScope', '$http', '$routeParams',function($scope, $filter, $rootScope, $http, $routeParams){
+    $scope.testvars = ['var1','var2'];
 	$scope.gpsStatus = ['initialising','ready'];
-    $scope.track = {date: new Date(), title: ''};
+    $scope.track = {date: $filter('date')(Date.now(), "yyyy-MM-dd"), title: ''};
 	var runOnceSet = false;
     var watchID = null;
 	console.log("controller: newLogCtrl");
+    console.log("date:" + $scope.track.date)
 	
 	$scope.startGpsRecord = function(){
 		console.log("startGpsRecord clicked");
@@ -41,12 +41,9 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$rootScope', '$http', '$rout
         console.log("track scope:");
         console.log($scope.track);
        
-        //var date = 'date:' + $scope.track.date;
         dataArray.id = $scope.track.title;
-        
-        //dataArray.push(date);
-        //$rootScope.dataStore.setKeyVal($scope.track.title, $scope.track.title);
-        //$rootScope.dataStore.setKeyVal("date-"+$scope.track.title, $scope.track.date);
+        dataArray.date = $scope.track.date;
+
         watchID = navigator.geolocation.watchPosition(onSuccess, onError, { enableHighAccuracy: true, timeout: 5000 });
 	}
 	
@@ -54,8 +51,9 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$rootScope', '$http', '$rout
 		console.log("stopGpsRecord clicked");
         navigator.geolocation.clearWatch(watchID);
         dataArray.coords = coordsArray;
-        //dataArray.push('coords:' + coordsArray);
-        $rootScope.dataStore.setKeyVal("data-" + $scope.track.title, JSON.stringify(dataArray));
+        
+        var dateId = Date.now(); //milliseconds
+        $rootScope.dataStore.setKeyVal(dateId, JSON.stringify(dataArray));
     }
 	
 	$scope.mapOptions = {
