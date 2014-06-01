@@ -2,12 +2,12 @@
     <h2>home</h2>
     <p>{{testvarshome}}</p>
     <ul class="table-view">
-      <li ng-repeat="item in logData" class="table-view-cell media">
+      <li ng-repeat="item in logData | reverse" class="table-view-cell media">
         <a href="#/logdetail/{{item.id}}" class="navigate-right">
           <img class="media-object pull-left" src="http://placehold.it/42x42">
           <div class="media-body">
-            {{item.title}}
-            <p>{{item.description}}</p>
+            {{item.id}}
+            <p>{{item.date}}</p>
           </div>
         </a>
       </li>

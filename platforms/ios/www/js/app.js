@@ -9,7 +9,8 @@ var learnerLoggingUi2App = angular.module('learnerLoggingUi2App', [
   'ui.map',
   'ui.event',
   'learnerLogCtrl',
-  'getAllLogDataJsonService'
+  'getAllLogDataJsonService',
+  'driverLoggingFilters'
 ]);
 
 learnerLoggingUi2App.run(function($rootScope, $window) {
@@ -55,7 +56,7 @@ learnerLoggingUi2App.config(function ($routeProvider) {
         templateUrl: 'views/home.html',
         controller: 'homeCtrl',
         depth:1
-     });;
+     });
 });
 
 function initMapCallback() {
