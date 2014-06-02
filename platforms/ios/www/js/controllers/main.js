@@ -2,6 +2,8 @@
 var dataArray = {};
 var learnerLogCtrl = angular.module('learnerLogCtrl', []);
 var coordsArray = new Array();
+var debugArray = new Array();
+
 var onSuccess = function(position) {
     console.log('Latitude: '    + position.coords.latitude          + '\n' +
           'Longitude: '         + position.coords.longitude         + '\n' +
@@ -11,9 +13,15 @@ var onSuccess = function(position) {
           'Heading: '           + position.coords.heading           + '\n' +
           'Speed: '             + position.coords.speed             + '\n' +
           'Timestamp: '         + position.timestamp                + '\n');
-    
+    var debugData = {};
+    debugData.altitude = position.coords.altitude;
+    debugData.accuracy = position.coords.accuracy;
+    debugData.heading = position.coords.heading;
+    debugData.speed = position.coords.speed;
+    debugData.timestamp = position.timestamp;
     var latlong = {"lat": position.coords.latitude, "lon": position.coords.longitude  };
     coordsArray.push(latlong);
+    debugArray.push(debugData);
 };
 
 // onError Callback receives a PositionError object
@@ -53,6 +61,7 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$filter', '$rootScope', '$ht
 		console.log("stopGpsRecord clicked");
         navigator.geolocation.clearWatch(watchID);
         dataArray.coords = coordsArray;
+        dataArray.debug = debugArray;
         
         var dateId = Date.now(); //milliseconds
         dataArray.timestamp.stop = dateId;
@@ -83,10 +92,10 @@ learnerLogCtrl.controller('homeCtrl', ['$scope', '$rootScope', '$http', '$routeP
 	$scope.testvarshome = ['var3','var4'];
 	console.log("controller: homeCtrl");
 
-    GetAllLogDataJsonService.query(function(data){
+    /*GetAllLogDataJsonService.query(function(data){
 		console.log(data);
-		//$rootScope.logData = data;
-	})
+		$rootScope.logData = data;
+	});*/
 
     console.log($rootScope.dataStore.getAllLogsAsJSON());
     $rootScope.logData = $rootScope.dataStore.getAllLogsAsJSON();
