@@ -8,6 +8,7 @@ var learnerLoggingUi2App = angular.module('learnerLoggingUi2App', [
   'ngAnimate',
   'ui.map',
   'ui.event',
+  'angularMoment',
   'learnerLogCtrl',
   'getAllLogDataJsonService',
   'driverLoggingFilters'

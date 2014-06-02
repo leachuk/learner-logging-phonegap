@@ -10,7 +10,7 @@ var getTimeLength = function(starttime, endtime){
 }
 
 //controller for creating a new log
-learnerLogCtrl.controller('newLogCtrl', ['$scope', '$filter', '$rootScope', '$http', '$routeParams',function($scope, $filter, $rootScope, $http, $routeParams){
+learnerLogCtrl.controller('newLogCtrl', ['$scope', '$filter', '$rootScope', '$http', '$routeParams','amMoment',function($scope, $filter, $rootScope, $http, $routeParams, amMoment){
     $scope.testvars = ['var1','var2'];
 	$scope.gpsStatus = ['initialising','ready'];
     $scope.track = {date: $filter('date')(Date.now(), "yyyy-MM-dd"), title: ''};
@@ -26,7 +26,10 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$filter', '$rootScope', '$ht
         //navigator.geolocation.getCurrentPosition(onSuccess, onError);
         console.log("track scope:");
         console.log($scope.track);
-       
+        
+        $scope.recordtime = Date.now();
+        console.log("recordtime:" + $scope.recordtime);
+        
         dataArray.id = $scope.track.title;
         dataArray.date = $scope.track.date;
         dataArray.timestamp = {};
