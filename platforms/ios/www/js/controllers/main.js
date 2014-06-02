@@ -4,40 +4,18 @@ var learnerLogCtrl = angular.module('learnerLogCtrl', []);
 var coordsArray = new Array();
 var debugArray = new Array();
 
-var onSuccess = function(position) {
-    console.log('Latitude: '    + position.coords.latitude          + '\n' +
-          'Longitude: '         + position.coords.longitude         + '\n' +
-          'Altitude: '          + position.coords.altitude          + '\n' +
-          'Accuracy: '          + position.coords.accuracy          + '\n' +
-          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-          'Heading: '           + position.coords.heading           + '\n' +
-          'Speed: '             + position.coords.speed             + '\n' +
-          'Timestamp: '         + position.timestamp                + '\n');
-    var debugData = {};
-    debugData.altitude = position.coords.altitude;
-    debugData.accuracy = position.coords.accuracy;
-    debugData.heading = position.coords.heading;
-    debugData.speed = position.coords.speed;
-    debugData.timestamp = position.timestamp;
-    var latlong = {"lat": position.coords.latitude, "lon": position.coords.longitude  };
-    coordsArray.push(latlong);
-    debugArray.push(debugData);
-};
-
-// onError Callback receives a PositionError object
-//
-function onError(error) {
-    alert('code: '    + error.code    + '\n' +
-          'message: ' + error.message + '\n');
+var getTimeLength = function(starttime, endtime){
+    var timelength = endtime - starttime;
+    return timelength;
 }
-
-
 
 //controller for creating a new log
 learnerLogCtrl.controller('newLogCtrl', ['$scope', '$filter', '$rootScope', '$http', '$routeParams',function($scope, $filter, $rootScope, $http, $routeParams){
     $scope.testvars = ['var1','var2'];
 	$scope.gpsStatus = ['initialising','ready'];
     $scope.track = {date: $filter('date')(Date.now(), "yyyy-MM-dd"), title: ''};
+    $scope.accuracy = -1;
+    
 	var runOnceSet = false;
     var watchID = null;
 	console.log("controller: newLogCtrl");
@@ -54,11 +32,12 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$filter', '$rootScope', '$ht
         dataArray.timestamp = {};
         dataArray.timestamp.start = Date.now();
 
-        watchID = navigator.geolocation.watchPosition(onSuccess, onError, { enableHighAccuracy: true, timeout: 5000 });
+        watchID = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, { enableHighAccuracy: true, timeout: 5000 });
 	}
 	
 	$scope.stopGpsRecord = function(){
 		console.log("stopGpsRecord clicked");
+        console.log("stop, accuracy:" + $scope.accuracy);
         navigator.geolocation.clearWatch(watchID);
         dataArray.coords = coordsArray;
         dataArray.debug = debugArray;
@@ -66,6 +45,34 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$filter', '$rootScope', '$ht
         var dateId = Date.now(); //milliseconds
         dataArray.timestamp.stop = dateId;
         $rootScope.dataStore.setKeyVal(dateId, JSON.stringify(dataArray));
+    }
+    
+    $scope.onSuccess = function(position) {
+        console.log('Latitude: '    + position.coords.latitude          + '\n' +
+              'Longitude: '         + position.coords.longitude         + '\n' +
+              'Altitude: '          + position.coords.altitude          + '\n' +
+              'Accuracy: '          + position.coords.accuracy          + '\n' +
+              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+              'Heading: '           + position.coords.heading           + '\n' +
+              'Speed: '             + position.coords.speed             + '\n' +
+              'Timestamp: '         + position.timestamp                + '\n');
+        var debugData = {};
+        debugData.altitude = position.coords.altitude;
+        debugData.accuracy = position.coords.accuracy;
+        debugData.heading = position.coords.heading;
+        debugData.speed = position.coords.speed;
+        debugData.timestamp = position.timestamp;
+        var latlong = {"lat": position.coords.latitude, "lon": position.coords.longitude  };
+        coordsArray.push(latlong);
+        debugArray.push(debugData);
+        $scope.accuracy = position.coords.accuracy;
+        $scope.$digest();
+    };
+    
+    // onError Callback receives a PositionError object
+    $scope.onError = function(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
     }
 	
 	$scope.mapOptions = {

@@ -4,8 +4,7 @@
       <input ng-model="track.title" type="text" placeholder="Title">
       <input ng-model="track.date" type="date">
     </form>
-    <p>GPS Status [{{gpsStatus[0]}}]</p>
-    <p>TitleIs : {{track.title}}</p>
+    <p>GPS Accuracy [{{accuracy}}]</p>
     <section id="map">
         <div id="map_canvas" ui-map="myMap" 
         style="height:200px;width:295px;border:2px solid #777777;margin:3px; border:1px solid" 
