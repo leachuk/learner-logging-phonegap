@@ -15,11 +15,31 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$filter', '$rootScope', '$ht
 	$scope.gpsStatus = ['initialising','ready'];
     $scope.track = {date: $filter('date')(Date.now(), "yyyy-MM-dd"), title: ''};
     $scope.accuracy = -1;
+    $scope.initLatLong = "-33.8738362136655, 151.18457794189453"; //initialise for marker
     
 	var runOnceSet = false;
     var watchID = null;
+    
+
+    
 	console.log("controller: newLogCtrl");
     console.log("date:" + $scope.track.date)
+    
+    $scope.$watch('myMap', function(newValue, oldValue) {
+        console.log("map watch");
+        //console.log($scope.myMap);
+        var currentPosLatLon = new google.maps.LatLng(-33.8738362136655, 151.18457794189453);
+        $scope.currentPosMarker = new google.maps.Marker( {position: currentPosLatLon, map: $scope.myMap} );
+        
+        $scope.onMapIdle = function() {
+            if (runOnceSet === false){
+                $scope.currentPosMarker;
+                runOnceSet = true;
+                console.log("run once idle");
+            }
+            console.log("map idle 1");
+        };
+    });
 	
 	$scope.startGpsRecord = function(){
 		console.log("startGpsRecord clicked");
@@ -59,7 +79,9 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$filter', '$rootScope', '$ht
               'Heading: '           + position.coords.heading           + '\n' +
               'Speed: '             + position.coords.speed             + '\n' +
               'Timestamp: '         + position.timestamp                + '\n');
+        
         var debugData = {};
+
         debugData.altitude = position.coords.altitude;
         debugData.accuracy = position.coords.accuracy;
         debugData.heading = position.coords.heading;
@@ -68,7 +90,11 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$filter', '$rootScope', '$ht
         var latlong = {"lat": position.coords.latitude, "lon": position.coords.longitude  };
         coordsArray.push(latlong);
         debugArray.push(debugData);
+        
+        //$scope.latest = {'lat': position.coords.latitude, 'lon': position.coords.longitude};
+        $scope.currentPosMarker.setPosition(new google.maps.LatLng(latlong.lat, latlong.lon));
         $scope.accuracy = position.coords.accuracy;
+        
         $scope.$digest();
     };
     
@@ -77,24 +103,16 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$filter', '$rootScope', '$ht
         alert('code: '    + error.code    + '\n' +
               'message: ' + error.message + '\n');
     }
-	
-	$scope.mapOptions = {
-      center: new google.maps.LatLng(-33.8738362136655, 151.18457794189453),
-      zoom: 12,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+
+
+    $scope.mapOptions = {
+        center: new google.maps.LatLng(-33.8738362136655, 151.18457794189453),
+        zoom: 12,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    
-  	$scope.onMapIdle = function() {
-        if (runOnceSet === false){
-            new google.maps.Marker({
-                map: $scope.myMap,
-                position: new google.maps.LatLng(-33.8738362136655, 151.18457794189453)
-            });    
-       
-			runOnceSet = true;
-			console.log("run once idle");
-        }  
-    };
+
+
+
 }]);
 
 learnerLogCtrl.controller('homeCtrl', ['$scope', '$rootScope', '$http', '$routeParams', 'GetAllLogDataJsonService', function($scope, $rootScope, $http, $routeParams, GetAllLogDataJsonService){
