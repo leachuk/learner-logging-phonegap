@@ -14,6 +14,7 @@
         </div>
         <div ui-map-marker="myMarkers"></div>
     </section>
-    <div><button class="icon icon-play" ng-click="startGpsRecord()">Start</button></div>
-    <div><button class="icon icon-pause" ng-click="stopGpsRecord()">Stop</button></div>
+    <button class="btn btn-positive icon icon-play" ng-click="startGpsRecord()" ng-disabled="startGpsState">Start</button>
+    <button class="btn btn-primary icon icon-pause" ng-click="pauseGpsRecord()" ng-disabled="pauseGpsState">Pause</button>
+    <button class="btn btn-negative icon icon-stop" ng-click="stopGpsRecord()" ng-disabled="stopGpsState">Stop</button>
 </div>

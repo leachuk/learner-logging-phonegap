@@ -10,3 +10,8 @@
 
 /* Map styles */
 .map-canvas { height: 200px; }
+
+/* global button overrides */
+.btn.disabled, .btn:disabled {
+    opacity: .3;
+}
