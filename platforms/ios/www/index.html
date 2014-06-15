@@ -38,40 +38,12 @@
 		<a class="icon icon-plus pull-right" href="#/newlog" ng-click="direction='rtl'"></a>
     </header>
     
-    <div class="bar bar-footer">
-      <a class="icon icon-compose pull-right" href="#composeModal"></a>
-      <small class="updated-text">Updated just now</small>
-    </div>
-    
     <!-- Add your site or application content here -->
     <div class="view-animate-container" ng-class="direction" >
         <!--<div class="content">-->
             <div ng-view class="view-animate"></div>
         <!--</div>-->
     </div>
-
-	
-	<!-- Compose modal -->
-    <div id="composeModal" class="modal">
-      <header class="bar bar-nav">
-        <a class="btn btn-link pull-right" href="#composeModal">
-          <strong>Send</strong>
-        </a>
-        <a class="btn btn-link pull-left" href="#composeModal">
-          Cancel
-        </a>
-        <h1 class="title">New message</h1>
-      </header>
-      
-      <!--<div class="content">-->
-        <form class="input-group">
-          <input type="text" placeholder="To:">
-          <input type="email" placeholder="From:">
-          <input type="text" placeholder="Subject:">
-          <textarea rows="20"></textarea>
-        </form>
-      <!--</div>-->
-    </div><!-- /.modal -->
     
     <!-- footer -->
 	<nav class="bar bar-tab">

@@ -57,6 +57,9 @@ var DriverLoggingApp = {
         */
         //showAlert('PhoneGap Initialized', 'Message');
         console.log('Received Event: ' + id);
+    },
+    getConnectionStatus: function(){
+        console.log(navigator.connection);
     }
 };
 
