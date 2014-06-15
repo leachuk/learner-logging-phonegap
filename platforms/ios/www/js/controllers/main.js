@@ -45,6 +45,9 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$location', '$filter', '$roo
 	$scope.startGpsRecord = function(){
 		console.log("startGpsRecord clicked");
         
+        dataArray = {};
+        coordsArray = new Array();
+        
         if(watchID != null){
             navigator.geolocation.clearWatch(watchID);
         }

@@ -1,13 +1,12 @@
 <div class="content">
     <h2>home</h2>
-    <p>{{testvarshome}}</p>
     <ul class="table-view">
-      <li ng-repeat="item in logData | reverse" class="table-view-cell media">
+      <li ng-repeat="item in logData | orderBy:'timestamp.start':true" class="table-view-cell media">
         <a href="#/logdetail/{{item.id}}" class="navigate-right">
-          <img class="media-object pull-left" src="http://placehold.it/42x42">
+         <span class="logcount pull-left">{{logData.length - $index}}</span>
           <div class="media-body">
             {{item.id}}
-            <p>{{item.date}}</p>
+            <p>{{item.date | date: 'EEE, dd-MM-yyyy'}}</p>
           </div>
         </a>
       </li>
