@@ -25,6 +25,15 @@ function showAlert(message, title) {
   }
 }
 
+//Allow for conditional loading of scripts.
+function include(script, callback) {
+    var e = document.createElement('script');
+    e.onload = callback;
+    e.src = script;
+    e.type = "text/javascript";
+    document.getElementsByTagName("head")[0].appendChild(e);
+}
+
 var DriverLoggingApp = {
     // Application Constructor
     initialize: function() {
@@ -60,6 +69,17 @@ var DriverLoggingApp = {
     },
     getConnectionStatus: function(){
         console.log(navigator.connection);
+    },
+    isDataAvailable: function(){
+        var isAvailable = true;
+        
+        /*switch (navigator.connection.type){
+            case Connection.NONE:
+                isAvailable = false;
+                break;
+        }
+        */
+        return isAvailable;
     }
 };
 

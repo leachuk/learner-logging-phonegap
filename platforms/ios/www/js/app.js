@@ -23,8 +23,6 @@ learnerLoggingUi2App.run(function($rootScope, $window) {
     // publish current transition direction on rootScope
     //$rootScope.direction = 'ltr'; //don't want initial animation
     
-    DriverLoggingApp.getConnectionStatus();
-    
     // listen change start events
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
         //$rootScope.direction = 'rtl';

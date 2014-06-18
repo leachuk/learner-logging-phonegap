@@ -165,6 +165,7 @@ learnerLogCtrl.controller('homeCtrl', ['$scope', '$rootScope', '$http', '$routeP
 	$scope.testvarshome = ['var3','var4'];
 	console.log("controller: homeCtrl");
 
+    DriverLoggingApp.getConnectionStatus();
     /*GetAllLogDataJsonService.query(function(data){
 		console.log(data);
 		$rootScope.logData = data;
