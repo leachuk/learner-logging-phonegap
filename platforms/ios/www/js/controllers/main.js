@@ -165,13 +165,13 @@ learnerLogCtrl.controller('homeCtrl', ['$scope', '$rootScope', '$http', '$routeP
 	$scope.testvarshome = ['var3','var4'];
 	console.log("controller: homeCtrl");
 
-    DriverLoggingApp.getConnectionStatus();
+    //DriverLoggingApp.getConnectionStatus();
     /*GetAllLogDataJsonService.query(function(data){
 		console.log(data);
 		$rootScope.logData = data;
 	});*/
 
-    console.log($rootScope.dataStore.getAllLogsAsJSON());
+    //console.log($rootScope.dataStore.getAllLogsAsJSON());
     $rootScope.logData = $rootScope.dataStore.getAllLogsAsJSON();
 }]);
 
@@ -187,7 +187,10 @@ learnerLogCtrl.controller('logDetailCtrl', ['$scope', '$rootScope', '$routeParam
       zoom: 12,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-
+    //mobile device connection status
+    $scope.connectionStatus = DriverLoggingApp.getConnectionStatus();
+    console.log("ng connection status:" + $scope.connectionStatus);
+    
     var mapPolyLine = [];
     for (var i=0; i < itemData[0].coords.length; i++){
     	var lat = itemData[0].coords[i].lat;
@@ -195,7 +198,7 @@ learnerLogCtrl.controller('logDetailCtrl', ['$scope', '$rootScope', '$routeParam
     	var latLon = new google.maps.LatLng(lat,lon);
     	mapPolyLine.push(latLon);
     }
-    console.log(mapPolyLine);
+    //console.log(mapPolyLine);
   	$scope.onMapIdle = function() {
         if (runOnceSet === false){
             new google.maps.Marker({

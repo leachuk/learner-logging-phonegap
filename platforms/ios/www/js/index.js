@@ -25,15 +25,6 @@ function showAlert(message, title) {
   }
 }
 
-//Allow for conditional loading of scripts.
-function include(script, callback) {
-    var e = document.createElement('script');
-    e.onload = callback;
-    e.src = script;
-    e.type = "text/javascript";
-    document.getElementsByTagName("head")[0].appendChild(e);
-}
-
 var DriverLoggingApp = {
     // Application Constructor
     initialize: function() {
@@ -66,20 +57,45 @@ var DriverLoggingApp = {
         */
         //showAlert('PhoneGap Initialized', 'Message');
         console.log('Received Event: ' + id);
+        if (this.isDataAvailable()){
+            DriverLoggingApp.javascriptInclude("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initMapCallback", function() {
+                console.log("google maps api loaded");
+            });
+        }
+    },
+    javascriptInclude: function(script, callback){
+        var e = document.createElement("script");
+        e.onload = callback;
+        e.src = script;
+        e.type = "text/javascript";
+        document.getElementsByTagName("body")[0].appendChild(e);
     },
     getConnectionStatus: function(){
-        console.log(navigator.connection);
+        var status = "offline";
+        var vendor = navigator.vendor.toUpperCase();
+        console.log("vendor:" + vendor);
+        if (navigator.connection){
+            var type = navigator.connection.type;
+            //console.log("type check:" + type);
+            if (type.toUpperCase() === "WIFI" || type.toUpperCase() === "CALL_3G" || type.toUpperCase() === "CALL_4G" ){
+                status = "online";
+            }
+
+        } else {
+            if (vendor.indexOf("GOOGLE") != -1){
+                status = "online"; //hack to deal with ripple emulator when using chrome
+            }
+        }
+        return status;
     },
     isDataAvailable: function(){
-        var isAvailable = true;
+        var status = false;
         
-        /*switch (navigator.connection.type){
-            case Connection.NONE:
-                isAvailable = false;
-                break;
+        if (DriverLoggingApp.getConnectionStatus() == "online"){
+            status = true;
         }
-        */
-        return isAvailable;
+        console.log("isDataAvailable: " + status);
+        return status;
     }
 };
 

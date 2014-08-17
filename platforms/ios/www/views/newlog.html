@@ -6,14 +6,7 @@
     </form>
     <p>GPS Accuracy [{{accuracy}}]</p>
     <p>Started recording <span am-time-ago="recordtime"></span></p>
-    <section id="map">
-        <div id="map_canvas" ui-map="myMap" 
-        style="height:200px;width:295px;border:2px solid #777777;margin:3px; border:1px solid" 
-        ui-options="mapOptions" 
-        ui-event="{'map-tilesloaded' : 'onMapIdle()'}">
-        </div>
-        <div ui-map-marker="myMarkers"></div>
-    </section>
+
     <button class="btn btn-positive icon icon-play" ng-click="startGpsRecord()" ng-disabled="startGpsState">Start</button>
     <button class="btn btn-primary icon icon-pause" ng-click="pauseGpsRecord()" ng-disabled="pauseGpsState">Pause</button>
     <button class="btn btn-negative icon icon-stop" ng-click="stopGpsRecord()" ng-disabled="stopGpsState">Stop</button>
