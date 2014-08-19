@@ -29,9 +29,11 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$location', '$filter', '$roo
     $scope.$watch('myMap', function(newValue, oldValue) {
         console.log("map watch");
         //console.log($scope.myMap);
-        var currentPosLatLon = new google.maps.LatLng(-33.8738362136655, 151.18457794189453);
-        $scope.currentPosMarker = new google.maps.Marker( {position: currentPosLatLon, map: $scope.myMap} );
         
+        //TODO abstract map code so we can swap out easily
+        //var currentPosLatLon = new google.maps.LatLng(-33.8738362136655, 151.18457794189453);
+        //$scope.currentPosMarker = new google.maps.Marker( {position: currentPosLatLon, map: $scope.myMap} );
+        /*
         $scope.onMapIdle = function() {
             if (runOnceSet === false){
                 $scope.currentPosMarker;
@@ -40,6 +42,7 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$location', '$filter', '$roo
             }
             console.log("map idle 1");
         };
+        */
     });
     
 	$scope.startGpsRecord = function(){
@@ -121,7 +124,9 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$location', '$filter', '$roo
         debugArray.push(debugData);
         
         //$scope.latest = {'lat': position.coords.latitude, 'lon': position.coords.longitude};
-        $scope.currentPosMarker.setPosition(new google.maps.LatLng(latlong.lat, latlong.lon));
+        
+        //TODO abstract map code so we can swap out easily
+        //$scope.currentPosMarker.setPosition(new google.maps.LatLng(latlong.lat, latlong.lon));
         $scope.accuracy = position.coords.accuracy;
         
         $scope.$digest();
@@ -140,7 +145,8 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$location', '$filter', '$roo
 
         var latlong = {"lat": position.coords.latitude, "lon": position.coords.longitude  };
 
-        $scope.currentPosMarker.setPosition(new google.maps.LatLng(latlong.lat, latlong.lon));
+        //TODO abstract map code so we can swap out easily
+        //$scope.currentPosMarker.setPosition(new google.maps.LatLng(latlong.lat, latlong.lon));
         $scope.accuracy = position.coords.accuracy;
         
         $scope.$digest();
@@ -152,11 +158,14 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$location', '$filter', '$roo
               'message: ' + error.message + '\n');
     }
 
+    //TODO abstract map code so we can swap out easily
+    /*
     $scope.mapOptions = {
         center: new google.maps.LatLng(-33.8738362136655, 151.18457794189453),
         zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
+    */
 
 }]);
 
@@ -182,15 +191,20 @@ learnerLogCtrl.controller('logDetailCtrl', ['$scope', '$rootScope', '$routeParam
 	var itemData = $filter('filter')($rootScope.logData, {id: $routeParams.logid});
     console.log(itemData);
 	$scope.logItemData = itemData[0];
+    //TODO abstract map code so we can swap out easily
+    /*
 	$scope.mapOptions = {
       center: new google.maps.LatLng(-33.8738362136655, 151.18457794189453),
       zoom: 12,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
+    */
     //mobile device connection status
     $scope.connectionStatus = DriverLoggingApp.getConnectionStatus();
     console.log("ng connection status:" + $scope.connectionStatus);
     
+    //TODO abstract map code so we can swap out easily
+    /*
     var mapPolyLine = [];
     for (var i=0; i < itemData[0].coords.length; i++){
     	var lat = itemData[0].coords[i].lat;
@@ -198,7 +212,9 @@ learnerLogCtrl.controller('logDetailCtrl', ['$scope', '$rootScope', '$routeParam
     	var latLon = new google.maps.LatLng(lat,lon);
     	mapPolyLine.push(latLon);
     }
+    */
     //console.log(mapPolyLine);
+    /*
   	$scope.onMapIdle = function() {
         if (runOnceSet === false){
             new google.maps.Marker({
@@ -219,6 +235,7 @@ learnerLogCtrl.controller('logDetailCtrl', ['$scope', '$rootScope', '$routeParam
 			console.log("run once idle");
         }  
     };
+    */
       	
 }]);
 

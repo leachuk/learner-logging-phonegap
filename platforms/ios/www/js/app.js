@@ -63,5 +63,5 @@ learnerLoggingUi2App.config(function ($routeProvider) {
 
 function initMapCallback() {
   console.log('Google maps api initialized.');
-  angular.bootstrap(document, ['learnerLoggingUi2App']);
+  //angular.bootstrap(document, ['learnerLoggingUi2App']);
 }

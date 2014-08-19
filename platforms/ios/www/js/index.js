@@ -58,6 +58,7 @@ var DriverLoggingApp = {
         //showAlert('PhoneGap Initialized', 'Message');
         console.log('Received Event: ' + id);
         if (this.isDataAvailable()){
+            console.log("native");
             DriverLoggingApp.javascriptInclude("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initMapCallback", function() {
                 console.log("google maps api loaded");
             });
@@ -68,7 +69,7 @@ var DriverLoggingApp = {
         e.onload = callback;
         e.src = script;
         e.type = "text/javascript";
-        document.getElementsByTagName("body")[0].appendChild(e);
+        document.getElementsByTagName("head")[0].appendChild(e);
     },
     getConnectionStatus: function(){
         var status = "offline";
@@ -76,7 +77,7 @@ var DriverLoggingApp = {
         console.log("vendor:" + vendor);
         if (navigator.connection){
             var type = navigator.connection.type;
-            //console.log("type check:" + type);
+            console.log("type check:" + type);
             if (type.toUpperCase() === "WIFI" || type.toUpperCase() === "CALL_3G" || type.toUpperCase() === "CALL_4G" ){
                 status = "online";
             }
