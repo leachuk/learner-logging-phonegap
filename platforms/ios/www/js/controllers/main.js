@@ -204,23 +204,29 @@ learnerLogCtrl.controller('logDetailCtrl', ['$scope', '$rootScope', '$routeParam
     console.log("ng connection status:" + $scope.connectionStatus);
     
     //TODO abstract map code so we can swap out easily
-    /*
-    var mapPolyLine = [];
+
+    //var mapPolyLine = [];
+    var routeLengthKm = 0;
+    var latPrevious = 0, lonPrevious = 0;
     for (var i=0; i < itemData[0].coords.length; i++){
     	var lat = itemData[0].coords[i].lat;
     	var lon = itemData[0].coords[i].lon;
-    	var latLon = new google.maps.LatLng(lat,lon);
-    	mapPolyLine.push(latLon);
+        latPrevious = i == 0 ? lat : itemData[0].coords[i-1].lat;
+        lonPrevious = i == 0 ? lon : itemData[0].coords[i-1].lon;
+    	//var latLon = new google.maps.LatLng(lat,lon);
+    	//mapPolyLine.push(latLon);
+        routeLengthKm += GeoUtils.getDistanceFromLatLonInKm(lat, lon, latPrevious, lonPrevious);
+
     }
-    */
-    //console.log(mapPolyLine);
+    console.log(routeLengthKm);
+    $scope.routeLengthKm = routeLengthKm;
     /*
   	$scope.onMapIdle = function() {
         if (runOnceSet === false){
             new google.maps.Marker({
                 map: $scope.myMap,
                 position: new google.maps.LatLng(-33.8738362136655, 151.18457794189453)
-            });    
+            });
        		
         	new google.maps.Polyline({
 				map: $scope.myMap,
