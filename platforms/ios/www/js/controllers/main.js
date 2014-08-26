@@ -220,7 +220,7 @@ learnerLogCtrl.controller('logDetailCtrl', ['$scope', '$rootScope', '$routeParam
 
     }
     console.log(routeLengthKm);
-    $scope.routeLengthKm = routeLengthKm;
+    $scope.routeLengthKm = routeLengthKm.toFixed(2);
     
     // -- route recorded date -- //
     $scope.recordedDate = itemData[0].date;
