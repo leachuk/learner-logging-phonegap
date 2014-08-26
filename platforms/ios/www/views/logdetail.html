@@ -8,19 +8,19 @@
       </div>
       <div class="input-row">
         <label>Date</label>
-        <input type="text" placeholder="27/07/2014">
+        <input type="text" placeholder="{{recordedDate | date:'EEE dd-MM-yyyy'}}">
       </div>
       <div class="input-row">
         <label>Time</label>
-        <input type="text" placeholder="35 minutes">
+        <input type="text" placeholder="{{timeTaken}} minutes">
       </div>
       <div class="input-row">
         <label>Started</label>
-        <input type="text" placeholder="16:05">
+        <input type="text" placeholder="{{startTime | date: 'shortTime'}}">
       </div>
       <div class="input-row">
         <label>Ended</label>
-        <input type="text" placeholder="16:40">
+        <input type="text" placeholder="{{stopTime | date: 'shortTime'}}">
       </div>
     </form>
 

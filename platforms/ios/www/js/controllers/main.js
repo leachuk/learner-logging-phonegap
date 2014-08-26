@@ -204,7 +204,8 @@ learnerLogCtrl.controller('logDetailCtrl', ['$scope', '$rootScope', '$routeParam
     console.log("ng connection status:" + $scope.connectionStatus);
     
     //TODO abstract map code so we can swap out easily
-
+    
+    // -- route length --//
     //var mapPolyLine = [];
     var routeLengthKm = 0;
     var latPrevious = 0, lonPrevious = 0;
@@ -220,6 +221,15 @@ learnerLogCtrl.controller('logDetailCtrl', ['$scope', '$rootScope', '$routeParam
     }
     console.log(routeLengthKm);
     $scope.routeLengthKm = routeLengthKm;
+    
+    // -- route recorded date -- //
+    $scope.recordedDate = itemData[0].date;
+    
+    // -- time taken -- //
+    $scope.startTime = itemData[0].timestamp.start;
+    $scope.stopTime = itemData[0].timestamp.stop;
+    $scope.timeTaken = (($scope.stopTime - $scope.startTime) / 60000).toFixed(2);
+    
     /*
   	$scope.onMapIdle = function() {
         if (runOnceSet === false){
