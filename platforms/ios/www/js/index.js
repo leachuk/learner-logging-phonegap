@@ -57,12 +57,14 @@ var DriverLoggingApp = {
         */
         //showAlert('PhoneGap Initialized', 'Message');
         console.log('Received Event: ' + id);
+        /*
         if (this.isDataAvailable()){
             console.log("native");
             DriverLoggingApp.javascriptInclude("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initMapCallback", function() {
                 console.log("google maps api loaded");
             });
         }
+        */
     },
     javascriptInclude: function(script, callback){
         var e = document.createElement("script");

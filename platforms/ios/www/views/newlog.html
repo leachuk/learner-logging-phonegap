@@ -6,7 +6,7 @@
     </form>
     <p>GPS Accuracy [{{accuracy}}]</p>
     <p>Started recording <span am-time-ago="recordtime"></span></p>
-
+    <p>Debug log count [{{gpsSuccessLoggedCount}}]</p>
     <button class="btn btn-positive icon icon-play" ng-click="startGpsRecord()" ng-disabled="startGpsState">Start</button>
     <button class="btn btn-primary icon icon-pause" ng-click="pauseGpsRecord()" ng-disabled="pauseGpsState">Pause</button>
     <button class="btn btn-negative icon icon-stop" ng-click="stopGpsRecord()" ng-disabled="stopGpsState">Stop</button>

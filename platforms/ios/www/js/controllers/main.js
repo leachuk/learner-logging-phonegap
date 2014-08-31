@@ -19,6 +19,7 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$location', '$filter', '$roo
     $scope.startGpsState = false;
     $scope.stopGpsState = true;
     $scope.pauseGpsState = true;
+    $scope.initVars = true;
     
 	var runOnceSet = false;
     var watchID = null;
@@ -26,8 +27,8 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$location', '$filter', '$roo
 	console.log("controller: newLogCtrl");
     console.log("date:" + $scope.track.date)
     
-    $scope.$watch('myMap', function(newValue, oldValue) {
-        console.log("map watch");
+    //$scope.$watch('myMap', function(newValue, oldValue) {
+    //    console.log("map watch");
         //console.log($scope.myMap);
         
         //TODO abstract map code so we can swap out easily
@@ -43,45 +44,63 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$location', '$filter', '$roo
             console.log("map idle 1");
         };
         */
-    });
+    //});
     
 	$scope.startGpsRecord = function(){
 		console.log("startGpsRecord clicked");
         
-        dataArray = {};
-        coordsArray = new Array();
-        
+
+        /*
         if(watchID != null){
             navigator.geolocation.clearWatch(watchID);
+        }
+        */
+        if($scope.watchID != null){
+            clearInterval($scope.watchID);
+        }
+        
+        //Don't re-initialise if pause was pressed.
+        if ($scope.initVars){
+            console.log("initialising scope variables.");
+            $scope.initVars = false; //don't initialise again.
+            dataArray = {};
+            coordsArray = new Array();
+            
+            console.log("track scope:");
+            console.log($scope.track);
+            
+            $scope.recordtime = Date.now();
+            console.log("recordtime:" + $scope.recordtime);
+            
+            dataArray.id = $scope.track.title;
+            dataArray.date = $scope.track.date;
+            dataArray.timestamp = {};
+            dataArray.timestamp.start = Date.now();
         }
         
         $scope.startGpsState = !$scope.startGpsState;
         $scope.pauseGpsState = !$scope.pauseGpsState;
         $scope.stopGpsState = $scope.stopGpsState ? !$scope.stopGpsState : false;
         //navigator.geolocation.getCurrentPosition(onSuccess, onError);
-        console.log("track scope:");
-        console.log($scope.track);
         
-        $scope.recordtime = Date.now();
-        console.log("recordtime:" + $scope.recordtime);
-        
-        dataArray.id = $scope.track.title;
-        dataArray.date = $scope.track.date;
-        dataArray.timestamp = {};
-        dataArray.timestamp.start = Date.now();
 
-        watchID = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, { enableHighAccuracy: true, timeout: 5000 });
+
+        //watchID = navigator.geolocation.watchPosition($scope.onSuccess, $scope.onError, { enableHighAccuracy: true, timeout: 5000, maximumAge: 3000 });
+        $scope.watchID = setInterval( function(){
+            navigator.geolocation.getCurrentPosition($scope.onSuccess, $scope.onError, { enableHighAccuracy: true, timeout: 5000, maximumAge: 3000 });
+        }, 2000);
 	}
     
+    //Clear interval and do nothing.
     $scope.pauseGpsRecord = function(){
         console.log("pauseGpsRecord clicked");
         $scope.pauseGpsState = !$scope.pauseGpsState;
         $scope.startGpsState = !$scope.startGpsState;
         //$scope.stopGpsState = !$scope.stopGpsState;
         
-        navigator.geolocation.clearWatch(watchID);
-        
-        watchID = navigator.geolocation.watchPosition($scope.onPause, $scope.onError, { enableHighAccuracy: true, timeout: 10000 });
+        //navigator.geolocation.clearWatch(watchID);
+        clearInterval($scope.watchID);
+        //watchID = navigator.geolocation.watchPosition($scope.onPause, $scope.onError, { enableHighAccuracy: true, timeout: 10000 });
     }
 	
 	$scope.stopGpsRecord = function(){
@@ -90,7 +109,8 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$location', '$filter', '$roo
         
         $scope.stopGpsState = !$scope.stopGpsState;
         
-        navigator.geolocation.clearWatch(watchID);
+        //navigator.geolocation.clearWatch(watchID);
+        clearInterval($scope.watchID);
         
         dataArray.coords = coordsArray;
         dataArray.debug = debugArray;
@@ -128,7 +148,7 @@ learnerLogCtrl.controller('newLogCtrl', ['$scope', '$location', '$filter', '$roo
         //TODO abstract map code so we can swap out easily
         //$scope.currentPosMarker.setPosition(new google.maps.LatLng(latlong.lat, latlong.lon));
         $scope.accuracy = position.coords.accuracy;
-        
+        $scope.gpsSuccessLoggedCount = coordsArray.length;
         $scope.$digest();
     };
     
